@@ -12,9 +12,14 @@
 
 const inv=require('./linear_algebra/mat_inv')
 
-var steps=inv.elem_transformations([[2,3],[2,3]],2)
-var y=steps.join('\\\\ ')
+var steps=inv.find_solutions([[2,4,6],[2,3,7]],2)
+var y=steps.join('\\\\')
 console.log(y)
+// var m='matrix([1,2],[3,4])'
+// var n='matrix([1,2],[3,4])'
+// var x=require('nerdamer')(m+'*'+n)
+// console.log(x.toString())
+
 //     require('mathjax').init({
 //         loader: {load: ['input/tex', 'output/svg']}
 //       }).then((MathJax) => {

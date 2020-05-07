@@ -1,0 +1,1 @@
+Main\,matrix\,:\\\begin{vmatrix}2 & 4 \cr 2 & 3\end{vmatrix}\\\det\begin{vmatrix}2 & 4 \cr 2 & 3\end{vmatrix} = -2\\\inv\begin{vmatrix}2 & 4 \cr 2 & 3\end{vmatrix} : \begin{vmatrix}-\frac{3}{2} & 2 \cr 1 & -1\end{vmatrix}\\Now\,,AX=B\\Therefore\,,X=A^-1 *B\\\begin{vmatrix}5 \cr -1\end{vmatrix}

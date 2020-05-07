@@ -7,7 +7,7 @@ const elem_transformations=(mat,n)=>{
     steps=[]
     steps.push('\\det'+nerdamer(nerdmat).toTeX()+' = '+det)
     if(det==0){
-        steps.push('Since,\\, \\Delta = 0')
+        steps.push('Since, \\Delta = 0')
         steps.push('Therefore,\\, inverse\\, does\\, not\\, exist')
     }
     else{
@@ -58,5 +58,34 @@ const elem_transformations=(mat,n)=>{
     return steps
 }
 
-module.exports={elem_transformations}
+const find_solutions=(mat,n)=>{
+    var mainmat=[]
+    for(var i=0;i<n;i++)
+    mainmat.push(mat[i].slice(0,n))
+    var nerdmat=stringify(mainmat)
+    steps=[]
+    steps.push('Main\\,matrix\\,='+nerdamer(nerdmat).toTeX())
+    
+    var det=parseInt(nerdamer.determinant(nerdmat).toString(),10)
+    steps.push('\\det'+nerdamer(nerdmat).toTeX()+' = '+det)
+    if(det==0){
+        steps.push('Since,\\, \\Delta = 0')
+        steps.push('Therefore,\\, inverse\\, does\\, not\\, exist')
+        steps.push('Thus\\,, no\\, solution\\, exists\\,or\\,infinite\\,solutions\\,exist')
+    }
+    else{
+        var inv=nerdamer.invert(nerdmat).toString()
+        steps.push('inv'+nerdamer(nerdmat).toTeX()+' = '+nerdamer(inv).toTeX())
+        steps.push('Now\\,,AX=B')
+        steps.push('Therefore\\,,$X=A\\^-1 *B')
+        var cofactor=[]
+        for(var i=0;i<n;i++)
+        cofactor.push([mat[i][n]])
+        var ans=nerdamer(inv+'*'+stringify(cofactor)).toString()
+        steps.push('X='+nerdamer(ans).toTeX())
+    }
+    return steps
+}
+
+module.exports={elem_transformations,find_solutions}
 
