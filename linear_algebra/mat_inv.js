@@ -29,7 +29,7 @@ const elem_transformations=(mat,n)=>{
             if(augmtx[i][i]!=1){
                 
                 var x=augmtx[i][i]
-                steps.push('Multiplying\\, row\\, '+(i+1)+' \\,by\\, '+nerdamer.convertToLaTeX(x.toString()))
+                steps.push('Dividing\\, row\\, '+(i+1)+' \\,by\\, '+nerdamer.convertToLaTeX(x.toString()))
                 for(var j=0;j<2*n;j++)
                 augmtx[i][j]/=x
                 nerdaug=stringify(augmtx)
@@ -53,8 +53,9 @@ const elem_transformations=(mat,n)=>{
         var nerdinv=stringify(inv)
         console.log(augmtx)
         steps.push(nerdamer(nerdinv).toTeX())
-        return steps
+        
     }
+    return steps
 }
 
 module.exports={elem_transformations}

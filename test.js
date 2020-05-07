@@ -12,7 +12,7 @@
 
 const inv=require('./linear_algebra/mat_inv')
 
-var steps=inv.elem_transformations([[1,2],[3,4]],2)
+var steps=inv.elem_transformations([[2,3],[2,3]],2)
 var y=steps.join('\\\\ ')
 console.log(y)
 //     require('mathjax').init({
