@@ -31,7 +31,7 @@ const elem_transformations=(mat,n)=>{
                 var x=augmtx[i][i]
                 steps.push('Dividing\\, row\\, '+(i+1)+' \\,by\\, '+nerdamer.convertToLaTeX(x.toString()))
                 for(var j=0;j<2*n;j++)
-                augmtx[i][j]/=x
+                augmtx[i][j]=nerdamer(augmtx[i][j]).divide(x).toString()
                 nerdaug=stringify(augmtx)
                 steps.push(nerdamer(nerdaug).toTeX())
             }
@@ -41,7 +41,7 @@ const elem_transformations=(mat,n)=>{
                 var x=augmtx[j][i]
                 steps.push('Multiplying \\,row\\,'+(i+1)+'\\, by \\,'+nerdamer.convertToLaTeX(x.toString())+'\\, and\\,subtracting \\,row \\,'+(j+1)+' \\,by\\, that')
                 for(var k=0;k<2*n;k++)
-                augmtx[j][k]-=(x*augmtx[i][k])
+                augmtx[j][k]=nerdamer(augmtx[j][k]).subtract(nerdamer(x).multiply(augmtx[i][k]))
                 nerdaug=stringify(augmtx)
                 steps.push(nerdamer(nerdaug).toTeX())
             }
@@ -51,7 +51,7 @@ const elem_transformations=(mat,n)=>{
         for(var i=0;i<n;i++)
         inv.push(augmtx[i].slice(n,2*n))
         var nerdinv=stringify(inv)
-        console.log(augmtx)
+        
         steps.push(nerdamer(nerdinv).toTeX())
         
     }
@@ -63,9 +63,12 @@ const find_solutions=(mat,n)=>{
     for(var i=0;i<n;i++)
     mainmat.push(mat[i].slice(0,n))
     var nerdmat=stringify(mainmat)
+    var cofactor=[]
+        for(var i=0;i<n;i++)
+        cofactor.push([mat[i][n]])
     steps=[]
-    steps.push('Main\\,matrix\\,='+nerdamer(nerdmat).toTeX())
-    
+    steps.push('Coefficient\\,matrix\\,A\\,='+nerdamer(nerdmat).toTeX())
+    steps.push('Constant\\,matrix\\,B\\,='+nerdamer(stringify(cofactor)).toTeX())
     var det=parseInt(nerdamer.determinant(nerdmat).toString(),10)
     steps.push('\\det'+nerdamer(nerdmat).toTeX()+' = '+det)
     if(det==0){
@@ -77,10 +80,8 @@ const find_solutions=(mat,n)=>{
         var inv=nerdamer.invert(nerdmat).toString()
         steps.push('inv'+nerdamer(nerdmat).toTeX()+' = '+nerdamer(inv).toTeX())
         steps.push('Now\\,,AX=B')
-        steps.push('Therefore\\,,$X=A\\^-1 *B')
-        var cofactor=[]
-        for(var i=0;i<n;i++)
-        cofactor.push([mat[i][n]])
+        steps.push('Therefore\\,,X=A\^{-1} *B')
+        
         var ans=nerdamer(inv+'*'+stringify(cofactor)).toString()
         steps.push('X='+nerdamer(ans).toTeX())
     }
