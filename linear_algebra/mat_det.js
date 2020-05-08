@@ -55,12 +55,4 @@ function get_determinant(matrix, index, size, step, output) {
   }
   return get_determinant(matrix, index + 1, size, step, output);
 }
-matrix = [
-  ["4", "3", "1", "5"],
-  ["2", "5", "1", "4"],
-  ["3", "3", "2", "1"],
-  ["1", "4", "2", "3"],
-];
-console.log(get_determinant(matrix, 0, 4, 1, "\\\\"));
-
 module.exports = { get_determinant };
