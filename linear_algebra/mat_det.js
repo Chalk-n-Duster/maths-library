@@ -1,63 +1,58 @@
-const nerdamer=require('nerdamer')
-const {stringify}=require('./utils')
+const nerdamer = require("nerdamer");
+const { stringify } = require("./utils");
 
-const solveDet=(mat,n)=>{
-  
-    if(n==2){
-        var ans=[]
-        ans.push(nerdamer.convertToLaTeX(mat[0][0].toString()+'*'+mat[1][1].toString()+' - '+mat[0][1].toString()+'*'+mat[1][0].toString()))
-        
-        ans.push(nerdamer('determinant('+stringify(mat)+')').toTeX())
-        return ans
+function get_determinant(matrix, index, size, step, output) {
+  if (index == size - 1) {
+    output +=
+      "Step\\," +
+      step.toString() +
+      "\\,Calculate\\,the\\,product\\,of\\,all\\,the\\,diagonal\\,elements\\\\";
+    step += 1;
+    let value = 1;
+    for (let i = 0; i < size; i++) {
+      if (i !== size - 1)
+        output += nerdamer(matrix[i][i]).toTeX() + "\\,\\times\\,";
+      else output += nerdamer(matrix[i][i]).toTeX();
+      value = nerdamer(value).multiply(matrix[i][i]).toString();
     }
-    else if(n>=3&&n<=6){
-      var k=1
-      var lines=[]
-      for(var i=0;i<n;i++)
-      lines.push('')
-      for(var i=0;i<n;i++){
-        var p=k*mat[0][i]
-        // console.log(i)
-        var cominor=[]
-        for(var j=1;j<n;j++){
-          var sublist=[]
-          for(var m=0;m<n;m++){
-            if(m==i)continue;
-            sublist.push(mat[j][m])
-            
-          }
-          cominor.push(sublist)
-        }
-        // console.log(i)
-        var cominortex=nerdamer(stringify(cominor)).toTeX()
-        if(i<n-1){
-          lines[0]+=(nerdamer.convertToLaTeX('('+p.toString()+')')+cominortex+' + ')
-          var subcomtex=solveDet(cominor,n-1)
-          for(var j=0;j<n-1;j++){
-            lines[j+1]+=(nerdamer.convertToLaTeX('('+p.toString()+')')+'*('+subcomtex[j]+') + ')
-          }
-        }
-        else{
-          lines[0]+=(nerdamer.convertToLaTeX('('+p.toString()+')')+cominortex)
-          var subcomtex=solveDet(cominor,n-1)
-          for(var j=0;j<n-1;j++){
-            lines[j+1]+=(nerdamer.convertToLaTeX('('+p.toString()+')')+'*('+subcomtex[j]+')')
-          }
-        }
-        
-        k*=-1
-        
-      }
-      var ans=nerdamer(nerdamer.convertFromLaTeX(lines[n-1])).toTeX()
-      lines.push(ans)
-      return lines
-      
-      
-    }
-    else{
-      return [nerdamer('determinant('+stringify(mat)+')').toTeX()]
-    }
-   
+    output += "\\,=\\," + nerdamer(value).toTeX();
+    return output;
+  }
+  for (let i = index + 1; i < size; i++) {
+    if (matrix[index][index] != matrix[i][index])
+      output +=
+        "Step\\," +
+        step.toString() +
+        "\\,Multiply\\,row\\," +
+        (index + 1).toString() +
+        "\\,by\\," +
+        nerdamer(matrix[i][index])
+          .divide(matrix[index][index])
+          .expand()
+          .toTeX() +
+        "\\,and\\,subtract\\,from\\,row\\," +
+        (i + 1).toString() +
+        "\\\\";
+    else
+      output +=
+        "Step\\," +
+        step.toString() +
+        "\\,Subtract\\,row\\," +
+        (index + 1).toString() +
+        "\\,from\\,row\\," +
+        (i + 1).toString() +
+        "\\\\";
+    step += 1;
+    const a = [matrix[i][index]];
+    for (let j = index; j < size; j++)
+      matrix[i][j] = nerdamer(matrix[i][j]).subtract(
+        nerdamer(nerdamer(matrix[index][j]).multiply(a[0]).toString())
+          .divide(matrix[index][index])
+          .expand()
+          .toString()
+      );
+    output += nerdamer(stringify(matrix)).toTeX() + "\\\\";
+  }
+  return get_determinant(matrix, index + 1, size, step, output);
 }
-
-module.exports={solveDet}
+module.exports = { get_determinant };
