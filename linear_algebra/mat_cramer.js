@@ -3,14 +3,15 @@ const { stringify } = require("./utils");
 
 function get_cramer(coeff, result, size) {
   det = [];
-  output = "\\\\Step\\,1:\\,Calculate\\,the\\,determinant\\,of\\,the\\,coefficient\\,matrix\\\\D\\,=\\,";
+  output =
+    "\\\\Step\\,1:\\,Calculate\\,the\\,determinant\\,of\\,the\\,coefficient\\,matrix\\\\D\\,=\\,";
   let d = nerdamer(stringify(coeff));
   output += d.toTeX();
   d = nerdamer.determinant(d);
   output += "\\,=\\," + d.toString() + "\\\\";
-  output += "Step\\,2:\\,Replace\\,the\\,n^{th}\\,column\\,of\\,the\\,coefficient\\,matrix\\,by\\,the\\,result\\,matrix\\,and\\,obtain\\,the\\,respective\\,determinants\\\\";
+  output +=
+    "Step\\,2:\\,Replace\\,the\\,n^{th}\\,column\\,of\\,the\\,coefficient\\,matrix\\,by\\,the\\,result\\,matrix\\,and\\,obtain\\,the\\,respective\\,determinants\\\\";
   for (let i = 0; i < size; i++) {
-    console.log(i);
     let temp_d = JSON.parse(JSON.stringify(coeff));
     for (let j = 0; j < size; j++) {
       temp_d[j][i] = result[j];
@@ -36,11 +37,15 @@ function get_cramer(coeff, result, size) {
       }
     }
     if (flag === 0) {
+      output +=
+        "Step\\,3:\\,As\\,you\\,can\\,see,\\,D\\,as\\,well\\,as\\,all\\,of\\,the\\,Dn\\,are\\,zero.\\,Hence\\,the\\,given\\,system\\,is\\,either\\,inconsistent,\\,i.e.,\\,it\\,has\\,no\\,solution,\\,or\\,it\\,has\\,infinitely\\,many\\,solutions.\\,To\\,find\\,out\\,which,\\,check\\,out\\,our\\,Gauss-Jordan\\,Elimination\\\\";
     } else {
-      output += "Step\\,3:\\,As\\,you\\,can\\,see,\\,D\\,=\\,0\\,but\\,all\\,of\\,the\\,Dn\\,are\\,not\\,zero.\\,Hence\\,the\\,given\\,system\\,is\\,inconsistent,\\,i.e.,\\,it\\,has\\,no\\,solution\\\\";
+      output +=
+        "Step\\,3:\\,As\\,you\\,can\\,see,\\,D\\,=\\,0\\,but\\,all\\,of\\,the\\,Dn\\,are\\,not\\,zero.\\,Hence\\,the\\,given\\,system\\,is\\,inconsistent,\\,i.e.,\\,it\\,has\\,no\\,solution\\\\";
     }
   } else {
-    output += "Step\\,3:\\,Calculate\\,the\\,solution\\,by\\,dividing\\,Dn\\,by\\,D\\\\";
+    output +=
+      "Step\\,3:\\,Calculate\\,the\\,solution\\,by\\,dividing\\,Dn\\,by\\,D\\\\";
     output += "Solutions:";
     for (let i = 0; i < size; i++) {
       output += "\\,\\frac{" + det[i].toString() + "}{" + d.toString() + "}";
@@ -55,16 +60,8 @@ function get_cramer(coeff, result, size) {
         output += ",";
       }
     }
+    output += "\\\\";
   }
-  console.log(output);
+  return output;
 }
-
-const mat1 = [
-  [3, 2, -1],
-  [1, -1, 5],
-  [2, 1, 0],
-];
-
-const mat2 = [1, -2, 3];
-
-get_cramer(mat1, mat2, mat1[0].length);
+module.exports = { get_cramer };
