@@ -114,5 +114,93 @@ const adjoint=(mat,n)=>{
     return {'adj':tr['tp'],'tex':steps.join('\\\\')}
 }
 
+const isOrthogonal=(mat)=>{
+    if(typeof(mat)==='string')
+    var nerdmat=mat
+    else
+    var nerdmat=stringify(mat)
+    nerdamer.setVar('M',nerdmat)
 
-module.exports={buildFromFunc,transpose,trace,adjoint}
+    if(nerdamer('invert(M)').toString()===nerdamer('transpose(M)').toString())
+    return true
+    else
+    return false
+}
+const isInvolutory=(mat)=>{
+    if(typeof(mat)==='string')
+    var nerdmat=mat
+    else
+    var nerdmat=stringify(mat)
+    nerdamer.setVar('M',nerdmat)
+    
+    if(nerdamer('invert(M)').toString()===nerdmat)
+    return true
+    else
+    return false
+}
+const isSymmetric=(mat)=>{
+    if(typeof(mat)==='string')
+    var nerdmat=mat
+    else
+    var nerdmat=stringify(mat)
+    nerdamer.setVar('M',nerdmat)
+  
+    if(nerdamer('transpose(M)').toString()===nerdmat)
+    return true
+    else
+    return false
+}
+const isSkewSymmetric=(mat)=>{
+    if(typeof(mat)==='string')
+    var nerdmat=mat
+    else
+    var nerdmat=stringify(mat)
+    nerdamer.setVar('M',nerdmat)
+  
+    if(nerdamer('transpose(M)*-1').toString()===nerdmat)
+    return true
+    else
+    return false
+}
+const isIdempotent=(mat)=>{
+    if(typeof(mat)==='string')
+    var nerdmat=mat
+    else
+    var nerdmat=stringify(mat)
+    
+    
+    if(nerdamer(nerdmat+'*'+nerdmat).toString()===nerdmat)
+    return true
+    else
+    return false
+}
+const isNilpotent=(mat,n)=>{
+    if(typeof(mat)==='string')
+    var nerdmat=mat
+    else
+    var nerdmat=stringify(mat)
+   
+    var zeromat=nerdamer('imatrix('+n+')-imatrix('+n+')').toString()
+    var temp=nerdmat
+    for(var i=1;i<=n;i++){
+        if(temp==zeromat)
+        return {'isNilpotent':true,'index':i}
+        temp=nerdamer(temp+'*'+nerdmat).toString()
+    }
+    return {'isNilpotent':false,'index':-1}
+    
+}
+const isSingular=(mat)=>{
+    if(typeof(mat)==='string')
+    var nerdmat=mat
+    else
+    var nerdmat=stringify(mat)
+    if(nerdamer('determinant('+nerdmat+')').toString()==='0')
+    return true
+    else
+    return false
+    
+}
+
+
+module.exports={buildFromFunc,transpose,trace,adjoint,isOrthogonal,isInvolutory,isSymmetric,isSkewSymmetric,isIdempotent,isNilpotent,isSingular}
