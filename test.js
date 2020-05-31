@@ -80,44 +80,54 @@
 // console.log("\nCramer's Rule:\n")
 // cramer(mat1, mat2);
 
-const {transpose,trace,adjoint,isOrthogonal,isInvolutory,isSkewSymmetric,isSymmetric,isIdempotent,isNilpotent,isSingular}=require('./linear_algebra/mat_basics')
+// const {transpose,trace,adjoint,isOrthogonal,isInvolutory,isSkewSymmetric,isSymmetric,isIdempotent,isNilpotent,isSingular}=require('./linear_algebra/mat_basics')
+// const mat = [
+//   [4, 3, 1, 5],
+//   [2, 5, 1, 4],
+//   [3, 3, 2, 1],
+//   [1, 4, 2, 3],
+// ];
+// const mat2=[
+//   [1,0],
+//   [0,-1]
+// ]
+// const mat3=[
+//   [0,5,-4],
+//   [-5,0,1],
+//   [4,-1,0]
+// ]
+// const mat4=[
+//   [2,-2,-4],
+//   [-1,3,4],
+//   [1,-2,-3]
+// ]
+// const mat5=[
+//   [1,1,3],
+//   [5,2,6],
+//   [-2,-1,-3]
+// ]
+// const mat6=[
+//   [1,2],
+//   [1,3]
+// ]
+// console.log(transpose(mat)['tex'])
+// console.log(trace(mat)['tex'])
+// console.log(adjoint(mat,4)['adj'])
+// console.log(isOrthogonal(mat2))
+
+// console.log(isInvolutory(mat2))
+// console.log(isSkewSymmetric(mat2))
+// console.log(isSymmetric(mat3))
+// console.log(isIdempotent(mat4))
+// console.log(isNilpotent(mat4,3))
+// console.log(isSingular(mat6))
+
+const {pow}=require('./linear_algebra/mat_power')
 const mat = [
   [4, 3, 1, 5],
   [2, 5, 1, 4],
   [3, 3, 2, 1],
   [1, 4, 2, 3],
 ];
-const mat2=[
-  [1,0],
-  [0,-1]
-]
-const mat3=[
-  [0,5,-4],
-  [-5,0,1],
-  [4,-1,0]
-]
-const mat4=[
-  [2,-2,-4],
-  [-1,3,4],
-  [1,-2,-3]
-]
-const mat5=[
-  [1,1,3],
-  [5,2,6],
-  [-2,-1,-3]
-]
-const mat6=[
-  [1,2],
-  [1,3]
-]
-console.log(transpose(mat)['tex'])
-console.log(trace(mat)['tex'])
-console.log(adjoint(mat,4)['adj'])
-console.log(isOrthogonal(mat2))
 
-console.log(isInvolutory(mat2))
-console.log(isSkewSymmetric(mat2))
-console.log(isSymmetric(mat3))
-console.log(isIdempotent(mat4))
-console.log(isNilpotent(mat4,3))
-console.log(isSingular(mat6))
+console.log(pow(mat,4,11)['tex'])
