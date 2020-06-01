@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "browserify": "^16.5.1",
+    "d3": "^3.5.17",
+    "function-plot": "^1.19.1",
     "mathjax": "^3.0.5",
     "mathjs": "^6.6.5",
     "nerdamer": "^1.1.4",

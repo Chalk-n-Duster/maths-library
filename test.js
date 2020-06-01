@@ -122,12 +122,16 @@
 // console.log(isNilpotent(mat4,3))
 // console.log(isSingular(mat6))
 
-const {pow}=require('./linear_algebra/mat_power')
-const mat = [
-  [4, 3, 1, 5],
-  [2, 5, 1, 4],
-  [3, 3, 2, 1],
-  [1, 4, 2, 3],
-];
+// const {pow}=require('./linear_algebra/mat_power')
+// const mat = [
+//   [4, 3, 1, 5],
+//   [2, 5, 1, 4],
+//   [3, 3, 2, 1],
+//   [1, 4, 2, 3],
+// ];
 
-console.log(pow(mat,4,11)['tex'])
+// console.log(pow(mat,4,11)['tex'])
+
+const {plot_vector}=require('./linear_algebra/func_plot')
+
+plot_vector(5,5)
