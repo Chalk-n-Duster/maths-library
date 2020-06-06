@@ -37,4 +37,36 @@ const stringify=(mat)=>{
     return replaceAll(str,' ','\\,')
   }
 
-  module.exports={stringify,matrixTex,replaceAll,stringTeX}
+  const v_stringify=(v)=>{
+    // console.log(mat)
+    var st='vector('
+    for(var i=0;i<v.length;i++){
+      st+=v[i].toString()
+      if(i!=v.length-1)
+      st+=','
+  
+    }
+    st+=')'
+    return st
+  }
+
+  const vectorTex=(v)=>{
+    var tex=''
+    for(var i=0;i<3;i++){
+      if(i>0&&typeof(v[i])==='string')
+      tex+='+'
+      else if(i>0&&v[i]>=0)
+      tex+='+'
+        if(i==0)
+        tex+=(v[i].toString()+'\\hat\\imath')
+        else if(i==1)
+        tex+=(v[i].toString()+'\\hat\\jmath')
+        else if(i==2)
+        tex+=(v[i].toString()+'\\hat k')
+      
+      
+    }
+    return tex
+  }
+
+  module.exports={stringify,matrixTex,replaceAll,stringTeX,v_stringify,vectorTex}

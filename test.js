@@ -132,6 +132,6 @@
 
 // console.log(pow(mat,4,11)['tex'])
 
-const {plot_vector}=require('./linear_algebra/func_plot')
+const {multiply}=require('./linear_algebra/mat_basics')
 
-plot_vector(5,5)
+console.log(multiply([[1,2],[3,4]],[[2,4],[3,4]]).tex)

@@ -47,6 +47,108 @@ const buildFromFunc=(fun,x,y)=>{
 
 }
 
+const add=(m1,m2)=>{
+    
+    var steps=[],nm3=''
+    if(m1.length!=m2.length||m1[0].length!=m2[0].length)
+    steps.push(stringTeX('Matrices incompatible for addition'))
+    else
+    {
+    const nm1=stringify(m1),nm2=stringify(m2)
+    steps.push(matrixTex(m1)+'+'+matrixTex(m2))
+    const m3=[]
+    for(var i=0;i<m1.length;i++)
+    {
+        const m_row=[]
+        m3.push(m_row)
+        for(var j=0;j<m1[0].length;j++){
+            if(m2[i][j]>=0)
+            m_row.push(m1[i][j].toString()+'+'+m2[i][j].toString())
+            else
+            m_row.push(m1[i][j].toString()+m2[i][j].toString())
+        }
+        
+    }
+    steps.push('='+matrixTex(m3))
+    const nm3=(nerdamer(nm1).add(nm2).toString())
+    steps.push('='+nerdamer(nm3).toTeX())
+}
+    return {
+        tex:steps.join('\\\\'),
+        sum:nm3,
+        
+    }
+}
+const subtract=(m1,m2)=>{
+    
+    var steps=[],nm3=''
+    if(m1.length!=m2.length||m1[0].length!=m2[0].length)
+    steps.push(stringTeX('Matrices incompatible for subtraction'))
+    else
+    {
+    const nm1=stringify(m1),nm2=stringify(m2)
+    steps.push(matrixTex(m1)+'-'+matrixTex(m2))
+    const m3=[]
+    for(var i=0;i<m1.length;i++)
+    {
+        const m_row=[]
+        m3.push(m_row)
+        for(var j=0;j<m1[0].length;j++){
+            if(m2[i][j]>=0)
+            m_row.push(m1[i][j].toString()+'-'+m2[i][j].toString())
+            else
+            m_row.push(m1[i][j].toString()+'-('+m2[i][j].toString()+')')
+        }
+        
+    }
+    steps.push('='+matrixTex(m3))
+    const nm3=(nerdamer(nm1).subtract(nm2).toString())
+    steps.push('='+nerdamer(nm3).toTeX())
+}
+    return {
+        tex:steps.join('\\\\'),
+        diff:nm3,
+        
+    }
+}
+
+const multiply=(m1,m2)=>{
+    
+    var steps=[],nm3=''
+    if(m1[0].length!=m2.length)
+    steps.push(stringTeX('Matrices incompatible for multiplication'))
+    else
+    {
+    const nm1=stringify(m1),nm2=stringify(m2)
+    steps.push(matrixTex(m1)+'\\times'+matrixTex(m2))
+    const m3=[]
+    for(var i=0;i<m1.length;i++)
+    {
+        const m_row=[]
+        m3.push(m_row)
+        for(var j=0;j<m2[0].length;j++){
+            var st='('
+            for(var k=0;k<m2.length;k++){
+                st+=(m1[i][k].toString()+'\\times'+m2[k][j].toString()+')')
+                if(k!==m2.length-1)
+                st+='+('
+            }
+            m_row.push(st)
+        }
+        
+    }
+    steps.push('='+matrixTex(m3))
+    const nm3=(nerdamer(nm1).multiply(nm2).toString())
+    steps.push('='+nerdamer(nm3).toTeX())
+}
+    return {
+        tex:steps.join('\\\\'),
+        product:nm3,
+        
+    }
+}
+
+
 const transpose=(mat)=>{
     if(typeof(mat)==='string')
     var nerdmat=mat
@@ -203,4 +305,4 @@ const isSingular=(mat)=>{
 }
 
 
-module.exports={buildFromFunc,transpose,trace,adjoint,isOrthogonal,isInvolutory,isSymmetric,isSkewSymmetric,isIdempotent,isNilpotent,isSingular}
+module.exports={buildFromFunc,add,subtract,multiply,transpose,trace,adjoint,isOrthogonal,isInvolutory,isSymmetric,isSkewSymmetric,isIdempotent,isNilpotent,isSingular}
